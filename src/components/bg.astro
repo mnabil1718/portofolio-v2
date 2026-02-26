@@ -1,0 +1,125 @@
+<div
+    class="pointer-events-none fixed top-0 right-0 bottom-0 left-0 print:hidden"
+    style="mask-image: radial-gradient(circle, transparent, black); -webkit-mask-image: radial-gradient(circle, transparent, black);"
+>
+    <canvas id="artPlumCanvas" width="400" height="400"></canvas>
+</div>
+<script is:inline>
+    const CHAR_POOL = [...new Set("muhammadnabil".split(""))];
+    const FONT_SIZE = 13;
+    const DOT_COUNT = 180; // number of chars scattered on sphere
+    const RADIUS_RATIO = 0.28; // globe size relative to shortest screen edge
+    const ROTATE_SPEED = 0.003; // radians per frame
+    const BASE_OPACITY = 0.18; // max opacity for closest points
+
+    const canvas = document.getElementById("artPlumCanvas");
+    const ctx = canvas.getContext("2d");
+    const size = { width: window.innerWidth, height: window.innerHeight };
+
+    const initCanvas = (width, height) => {
+        const dpr = window.devicePixelRatio || 1;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        canvas.width = dpr * width;
+        canvas.height = dpr * height;
+        ctx.scale(dpr, dpr);
+    };
+
+    initCanvas(size.width, size.height);
+
+    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+    // generate evenly distributed points on a unit sphere
+    // using fibonacci sphere algorithm — much more even than random
+    const generatePoints = (count) => {
+        const points = [];
+        const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+        for (let i = 0; i < count; i++) {
+            const y = 1 - (i / (count - 1)) * 2; // -1 to 1
+            const r = Math.sqrt(1 - y * y);
+            const theta = goldenAngle * i;
+            points.push({
+                x: Math.cos(theta) * r,
+                y,
+                z: Math.sin(theta) * r,
+                char: pick(CHAR_POOL),
+            });
+        }
+        return points;
+    };
+
+    let points = generatePoints(DOT_COUNT);
+    let angleY = 0; // rotation around Y axis
+    let angleTilt = 0.3; // slight tilt for visual interest, stays fixed
+
+    const rotateY = (x, z, angle) => [
+        x * Math.cos(angle) - z * Math.sin(angle),
+        x * Math.sin(angle) + z * Math.cos(angle),
+    ];
+
+    const rotateX = (y, z, angle) => [
+        y * Math.cos(angle) - z * Math.sin(angle),
+        y * Math.sin(angle) + z * Math.cos(angle),
+    ];
+
+    const draw = () => {
+        ctx.clearRect(0, 0, size.width, size.height);
+        ctx.font = `${FONT_SIZE}px monospace`;
+
+        const cx = size.width / 2;
+        const cy = size.height / 2;
+        const radius = Math.min(size.width, size.height) * RADIUS_RATIO;
+
+        // project, sort by depth, then draw back-to-front
+        const projected = points.map((p) => {
+            // rotate around Y (spin)
+            const [rx, rz1] = rotateY(p.x, p.z, angleY);
+            // tilt slightly on X axis
+            const [ry, rz2] = rotateX(p.y, rz1, angleTilt);
+
+            // rz2 is depth: -1 (back) to 1 (front)
+            // only render front-facing points (z > -0.1 allows slight wrap-around)
+            const visible = rz2 > -0.1;
+
+            // perspective scale — subtle, makes front chars slightly larger
+            const perspective = 0.85 + rz2 * 0.15;
+            const fontSize = FONT_SIZE * perspective;
+
+            // depth-based opacity: back = near 0, front = BASE_OPACITY
+            const depthOpacity = ((rz2 + 1) / 2) * BASE_OPACITY;
+
+            return {
+                screenX: cx + rx * radius,
+                screenY: cy + ry * radius,
+                depth: rz2,
+                opacity: depthOpacity,
+                fontSize,
+                char: p.char,
+                visible,
+            };
+        });
+
+        // sort back to front so closer chars render on top
+        projected.sort((a, b) => a.depth - b.depth);
+
+        projected.forEach(
+            ({ screenX, screenY, opacity, fontSize, char, visible }) => {
+                if (!visible || opacity < 0.01) return;
+                ctx.font = `${fontSize}px monospace`;
+                ctx.fillStyle = `rgba(180,180,180,${opacity.toFixed(3)})`;
+                ctx.fillText(char, screenX, screenY);
+            },
+        );
+
+        angleY += ROTATE_SPEED;
+        requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    window.addEventListener("resize", () => {
+        size.width = window.innerWidth;
+        size.height = window.innerHeight;
+        initCanvas(size.width, size.height);
+    });
+</script>
