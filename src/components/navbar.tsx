@@ -6,6 +6,7 @@ const navs = [
     { id: 0, label: "tools", url: "#tools" },
     { id: 1, label: "experience", url: "#experience" },
     { id: 2, label: "projects", url: "#projects" },
+    { id: 3, label: "contact", url: "#contact" },
 ];
 
 export function Navbar() {
