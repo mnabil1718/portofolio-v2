@@ -3,11 +3,10 @@ import { Command } from "../command";
 import { GithubCalendar } from "../github-calendar";
 ---
 
-<section id="tools" class="flex flex-col border-t px-5 py-10">
+<section id="contrib" class="flex flex-col border-t px-5 py-10">
     <div class="flex flex-col">
         <Command cmd=`git log --oneline --since="1 year ago" | wc -l` />
-        <div class="mt-5">
-            <GithubCalendar client:only="react" />
-        </div>
+        <h2 class="mb-10 text-xl font-bold">Github Contributions</h2>
+        <GithubCalendar client:only="react" />
     </div>
 </section>
