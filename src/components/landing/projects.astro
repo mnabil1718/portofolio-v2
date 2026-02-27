@@ -1,0 +1,61 @@
+---
+import { Command } from "../command";
+import { ProjectCard } from "../project-card";
+
+const projects = [
+    {
+        id: 1,
+        title: "matté",
+        description:
+            "Matcha & coffee e-commerce platform with real-time updates",
+        deployment_link: "https://matte-commerce.vercel.app",
+        github_link: "https://github.com/mnabil1718/commerce",
+    },
+    {
+        id: 2,
+        title: "taskify",
+        description: "Real-time kanban board platform",
+        deployment_link: "https://taskify-frontend-lilac.vercel.app",
+        github_link: "https://github.com/mnabil1718/taskify-deployments",
+    },
+    {
+        id: 3,
+        title: "coach.ai",
+        description: "LLM-powered career coaching",
+        deployment_link: "https://coach-eight-ashy.vercel.app",
+        github_link: "https://github.com/mnabil1718/coach",
+    },
+    {
+        id: 4,
+        title: "circle.app",
+        description: "Social circle finder near you",
+        deployment_link: null,
+        github_link: "https://github.com/mnabil1718/dw-circle",
+    },
+    {
+        id: 5,
+        title: "portfolio-v2",
+        description: "catppuccin-themed portfolio website",
+        deployment_link: null,
+        github_link: null,
+    },
+    {
+        id: 6,
+        title: "cocoa.net",
+        description:
+            "cocoa maturity classifier ML-vision app built with Tensorflow-Lite & Flutter",
+        deployment_link: null,
+        github_link: "https://github.com/mnabil1718/flutter_tflite_cocoa",
+    },
+];
+---
+
+<section id="experience" class="flex flex-col border-t px-5 py-10">
+    <div class="flex flex-col">
+        <Command cmd="ls ~/projects" />
+        <h1 class="mb-10 text-xl font-bold">Projects</h1>
+        <ul class="grid grid-cols-1 gap-3 md:grid-cols-2">
+            {projects.map((p) => <ProjectCard p={p} client:load />)}
+        </ul>
+    </div>
+</section>

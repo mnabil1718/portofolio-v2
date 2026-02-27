@@ -1,0 +1,13 @@
+---
+import { Command } from "../command";
+import { GithubCalendar } from "../github-calendar";
+---
+
+<section id="tools" class="flex flex-col border-t px-5 py-10">
+    <div class="flex flex-col">
+        <Command cmd=`git log --oneline --since="1 year ago" | wc -l` />
+        <div class="mt-5">
+            <GithubCalendar client:only="react" />
+        </div>
+    </div>
+</section>

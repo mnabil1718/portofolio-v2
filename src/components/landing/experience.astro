@@ -1,54 +1,49 @@
 ---
-import Image from "astro/components/Image.astro";
 import { Command } from "../command";
-
+import { ExperienceItem } from "../experience-item";
 import Zafira from "../../assets/zafiraglow.png";
+import Tingkatin from "../../assets/tingkatin.png";
+
+const experiences = [
+    {
+        id: 1,
+        company: "Zafira Glow",
+        role: "Digital Marketer",
+        img: Zafira.src,
+        imgAlt: "Zafira Glow",
+        from: "Jan 2025",
+        to: "Aug 2025",
+        jobdesks: [
+            "Develop e-commerce site using WordPress",
+            "Improve site performance & SEO best practices",
+            "Develop digital marketing & content marketing strategies",
+            "Implement marketing strategies using Meta Ads & Google Ads",
+        ],
+    },
+    {
+        id: 2,
+        company: "Tingkatin.co",
+        role: "Freelance Web Developer",
+        img: Tingkatin.src,
+        imgAlt: "Tingkatin.co",
+        from: "Jul 2023",
+        to: "Dec 2024",
+        jobdesks: [
+            "Develop portfolio & blog websites using wordpress and next.js for clients",
+            "Copywriting internal wordpress blog",
+            "Creating documentation and client's requirement for incoming project",
+            "Bug fixes & troubleshoot on deployed client's websites",
+        ],
+    },
+];
 ---
 
-<section id="tools" class="flex flex-col border-t p-5">
+<section id="experience" class="flex flex-col border-t px-5 py-10">
     <div class="flex flex-col">
         <Command cmd="cat ./experiences.log" />
-        <h1 class="mb-5 text-xl font-bold">Experiences</h1>
-        <ul class="flex items-stretch">
-            <div class="text-muted-foreground pr-2 text-xs">
-                Jan 2025 - Aug 2025
-            </div>
-            <div class="bg-foreground h-28 w-1 flex-none"></div>
-            <div class="pl-3">
-                <div class="flex items-start gap-5">
-                    <div class="relative h-14 w-14 overflow-hidden">
-                        <Image
-                            src={Zafira}
-                            alt="Zafira Glow"
-                            width={56}
-                            height={56}
-                        />
-                    </div>
-                    <div>
-                        <h2>Zafira Glow</h2>
-                        <p class="text-muted-foreground mb-3 text-xs">
-                            Freelance Digital Marketer
-                        </p>
-                        <ul
-                            class="text-muted-foreground flex list-inside list-disc flex-col gap-2 text-sm"
-                        >
-                            <li>Develop e-commerce site using wordpress</li>
-                            <li>
-                                Improve site performance & SEO best practices
-                            </li>
-                            <li>
-                                Develop digital marketing & content marketing
-                                strategies
-                            </li>
-                            <li>
-                                Implement marketing strategies using Meta Ads &
-                                Google Ads
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <ul></ul>
-            </div>
+        <h1 class="mb-10 text-xl font-bold">Experiences</h1>
+        <ul class="flex flex-col gap-0">
+            {experiences.map((exp) => <ExperienceItem exp={exp} client:load />)}
         </ul>
     </div>
 </section>
