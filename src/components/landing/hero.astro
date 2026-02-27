@@ -1,6 +1,25 @@
 ---
 import { Command } from "../command";
 import { Ascii } from "../ascii";
+import { Link } from "../link";
+
+const links = [
+    {
+        id: 1,
+        href: "mailto:mnabil1718@gmail.com",
+        label: "email",
+    },
+    {
+        id: 2,
+        href: "mailto:mnabil1718@gmail.com",
+        label: "resume",
+    },
+    {
+        id: 3,
+        href: "https://github.com/mnabil1718",
+        label: "github",
+    },
+];
 ---
 
 <section
@@ -20,24 +39,11 @@ import { Ascii } from "../ascii";
             interest in more low-level stuff. Also, I use Neovim btw.
         </p>
         <div class="flex items-center gap-4">
-            <a
-                href="mailto:mnabil1718@gmail.com"
-                class="text-muted-foreground hover:text-foreground text-sm hover:underline"
-            >
-                [email]</a
-            >
-            <a
-                href="mailto:you@email.com"
-                class="text-muted-foreground hover:text-foreground text-sm hover:underline"
-            >
-                [resume]</a
-            >
-            <a
-                href="https://github.com/mnabil1718"
-                class="text-muted-foreground hover:text-foreground text-sm hover:underline"
-            >
-                [github]</a
-            >
+            {
+                links.map((l) => (
+                    <Link label={l.label} href={l.href} client:load />
+                ))
+            }
         </div>
     </div>
 </section>

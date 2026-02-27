@@ -1,6 +1,7 @@
 ---
 import { Font } from "astro:assets";
 import { Navbar } from "../components/navbar";
+import { Footer } from "../components/footer";
 ---
 
 <html lang="en">
@@ -14,9 +15,10 @@ import { Navbar } from "../components/navbar";
         <Font cssVariable="--font-mono" preload />
     </head>
     <body>
-        <main class="relative mx-auto min-h-screen max-w-4xl md:border">
+        <main class="relative mx-auto min-h-screen max-w-4xl md:border-x">
             <Navbar client:load />
             <slot />
+            <Footer client:load />
         </main>
     </body>
 </html>
