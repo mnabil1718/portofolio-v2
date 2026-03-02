@@ -1,4 +1,4 @@
-import { useAsciiText, slant, ansiShadow } from 'react-ascii-text';
+import { useAsciiText, slant } from 'react-ascii-text';
 
 export function Ascii() {
     const asciiTextRef = useAsciiText({
@@ -17,7 +17,7 @@ export function Ascii() {
     return <div className="w-full overflow-hidden">
         <pre
             ref={asciiTextRef as React.RefObject<HTMLPreElement>}
-            className="origin-left text-base font-bold"
+            className="origin-left text-sm md:text-base font-bold"
         />
     </div>;
 }
