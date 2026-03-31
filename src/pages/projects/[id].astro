@@ -1,4 +1,7 @@
 ---
+import "../../styles/global.css";
+import ProjectLayout from "@/layouts/ProjectLayout.astro";
+import TerminalSeparator from "@/components/terminal-separator.astro";
 import { getCollection, render } from "astro:content";
 export async function getStaticPaths() {
     const projects = await getCollection("projects");
@@ -11,5 +14,34 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 ---
 
-<h1>{project.data.title}</h1>
-<Content />
+<ProjectLayout title={project.data.title} description={project.data.desc}>
+    <article class="prose lg:prose-xl mx-auto px-5 py-10">
+        <header class="mb-7">
+            <img
+                src={project.data.image.src}
+                alt={project.data.title}
+                class="mb-10"
+            />
+            <h1 class="mb-5 text-xl font-bold md:text-3xl">
+                {project.data.title}<span class="blink">_</span>
+            </h1>
+            <p class="text-foreground dark:text-foreground/70">
+                {project.data.desc}
+            </p>
+
+            {
+                project.data.live_url && (
+                    <a href={project.data.live_url} class="btn">
+                        View Live
+                    </a>
+                )
+            }
+        </header>
+
+        <TerminalSeparator />
+
+        <div class="mt-7">
+            <Content />
+        </div>
+    </article>
+</ProjectLayout>

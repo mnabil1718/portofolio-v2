@@ -5,35 +5,23 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 
 const navs = [
-    { id: 0, label: "tools", url: "#tools" },
-    { id: 1, label: "experience", url: "#experience" },
-    { id: 2, label: "projects", url: "#projects" },
-    { id: 3, label: "contact", url: "#contact" },
+    { id: 0, label: "home", url: "/" },
+    { id: 1, label: "projects", url: "/projects" },
 ];
 
+function getActiveLabel() {
+    if (typeof window === "undefined") return "home";
+    const path = window.location.pathname;
+    const match = navs.find((n) =>
+        n.url === "/" ? path === "/" : path.startsWith(n.url)
+    );
+    return match?.label ?? "home";
+}
+
 export function Navbar() {
-    const [activeId, setActiveId] = useState("tools");
+    const [activeId, setActiveId] = useState(getActiveLabel);
     const [mobileOpen, setMobileOpen] = useState(false);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setActiveId(entry.target.id);
-                    }
-                });
-            },
-            { threshold: 1.0 }
-        );
-        navs.forEach((n) => {
-            const el = document.getElementById(n.label);
-            if (el) observer.observe(el);
-        });
-        return () => observer.disconnect();
-    }, []);
-
-    // Close menu on resize to desktop
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 768) setMobileOpen(false);
@@ -51,10 +39,7 @@ export function Navbar() {
         <>
             <nav className="p-5 border-b w-full sticky top-0 z-50 backdrop-blur-lg">
                 <div className="flex justify-between items-center">
-                    {/* Left placeholder — keep your logo/name here if needed */}
                     <div />
-
-                    {/* Desktop links */}
                     <div className="hidden md:flex items-center gap-5 text-xs">
                         {navs.map((n) => (
                             <NavLink
@@ -67,11 +52,8 @@ export function Navbar() {
                             />
                         ))}
                     </div>
-
-                    {/* Right controls */}
                     <div className="flex gap-2 items-center">
                         <ThemeToggle />
-                        {/* Mobile hamburger — hidden on md+ */}
                         <Button
                             variant="ghost"
                             size="sm"
@@ -83,8 +65,6 @@ export function Navbar() {
                         </Button>
                     </div>
                 </div>
-
-                {/* Mobile dropdown */}
                 <div
                     className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileOpen ? "max-h-64 opacity-100 mt-4" : "max-h-0 opacity-0"
                         }`}
