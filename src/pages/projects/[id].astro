@@ -3,6 +3,8 @@ import "../../styles/global.css";
 import ProjectLayout from "@/layouts/ProjectLayout.astro";
 import TerminalSeparator from "@/components/terminal-separator.astro";
 import { getCollection, render } from "astro:content";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, ChevronLeft } from "lucide-react";
 export async function getStaticPaths() {
     const projects = await getCollection("projects");
     return projects.map((p) => ({
@@ -17,6 +19,11 @@ const { Content } = await render(project);
 <ProjectLayout title={project.data.title} description={project.data.desc}>
     <article class="prose lg:prose-xl mx-auto px-5 py-10">
         <header class="mb-7">
+            <a
+                href="/projects"
+                class="text-foreground mb-7 flex items-center gap-2 text-sm opacity-80 hover:underline hover:opacity-100"
+                ><ArrowLeft size={20} /> /projects</a
+            >
             <img
                 src={project.data.image.src}
                 alt={project.data.title}
