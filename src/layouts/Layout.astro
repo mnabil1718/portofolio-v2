@@ -4,7 +4,7 @@ import { Navbar } from "../components/navbar";
 import { Footer } from "../components/footer";
 ---
 
-<html lang="en">
+<html lang="en" class="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
@@ -14,19 +14,18 @@ import { Footer } from "../components/footer";
         <title>Muhammad Nabil - Software Engineer</title>
         <Font cssVariable="--font-mono" preload />
 
-        <!-- init preferred theme as dark -->
         <script>
             (function () {
                 const stored = localStorage.getItem("theme");
-                const preferred = window.matchMedia(
-                    "(prefers-color-scheme: dark)",
-                ).matches
-                    ? "dark"
-                    : "light";
-                document.documentElement.classList.toggle(
-                    "dark",
-                    (stored ?? preferred) === "dark",
-                );
+                if (stored === "light") {
+                    document.documentElement.classList.remove("dark");
+                } else if (!stored) {
+                    const prefersDark = window.matchMedia(
+                        "(prefers-color-scheme: dark)",
+                    ).matches;
+                    if (!prefersDark)
+                        document.documentElement.classList.remove("dark");
+                }
             })();
         </script>
     </head>

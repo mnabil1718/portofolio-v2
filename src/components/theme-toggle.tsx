@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export function ThemeToggle() {
     const [theme, setTheme] = useState<"light" | "dark">(() => {
-        if (typeof document === "undefined") return "dark"; // SSR fallback
+        if (typeof document === "undefined") return "dark"; // matches <html class="dark">
         return document.documentElement.classList.contains("dark") ? "dark" : "light";
     });
 
