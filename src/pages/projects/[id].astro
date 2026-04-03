@@ -1,10 +1,11 @@
 ---
 import "../../styles/global.css";
-import ProjectLayout from "@/layouts/ProjectLayout.astro";
+import { Image } from "astro:assets";
+import Layout from "@/layouts/Layout.astro";
+import Prose from "@/components/prose.astro";
 import TerminalSeparator from "@/components/terminal-separator.astro";
 import { getCollection, render } from "astro:content";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, ChevronLeft } from "lucide-react";
+import { Link } from "@/components/link";
 export async function getStaticPaths() {
     const projects = await getCollection("projects");
     return projects.map((p) => ({
@@ -16,39 +17,70 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 ---
 
-<ProjectLayout title={project.data.title} description={project.data.desc}>
-    <article class="prose lg:prose-xl mx-auto px-5 py-10">
+<Layout title={project.data.title} description={project.data.desc}>
+    <article class="mx-auto px-5 py-10">
+
+            <nav class="flex items-center text-xs justify-between mb-7">
+                <Link
+                    label="Go to projects"
+                    href="/projects"
+                    newTab={false}
+                    client:load
+                />
+
+            <span class="text-muted-foreground">
+                {
+                    project.data.created_at.toLocaleDateString("en-UK", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                    })
+                }
+            </span>
+            </nav>
         <header class="mb-7">
-            <a
-                href="/projects"
-                class="text-foreground mb-7 flex items-center gap-2 text-sm opacity-80 hover:underline hover:opacity-100"
-                ><ArrowLeft size={20} /> /projects</a
-            >
-            <img
-                src={project.data.image.src}
-                alt={project.data.title}
-                class="mb-10"
-            />
+
+<Image
+    src={project.data.image}
+    alt={project.data.title}
+    class="mb-10"
+/>
             <h1 class="mb-5 text-xl font-bold md:text-3xl">
                 {project.data.title}<span class="blink">_</span>
             </h1>
-            <p class="text-foreground dark:text-foreground/70">
+
+            <p class="text-foreground dark:text-foreground/70 mb-5">
                 {project.data.desc}
             </p>
 
-            {
-                project.data.live_url && (
-                    <a href={project.data.live_url} class="btn">
-                        View Live
-                    </a>
-                )
-            }
+            <div class="flex items-center gap-3">
+                {
+                    project.data.live_url && (
+                        <Link
+                            label="View demo"
+                            href={project.data.live_url}
+                            client:load
+                        />
+                    )
+                }
+                {
+                    project.data.github_url && (
+                        <Link
+                            label="View github"
+                            href={project.data.github_url}
+                            client:load
+                        />
+                    )
+                }
+            </div>
         </header>
 
         <TerminalSeparator />
 
         <div class="mt-7">
+            <Prose>
             <Content />
+            </Prose>
         </div>
     </article>
-</ProjectLayout>
+</Layout>

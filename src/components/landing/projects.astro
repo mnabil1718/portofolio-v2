@@ -52,7 +52,7 @@ const projects = [
 
 <section id="projects" class="flex flex-col border-t px-5 py-10">
     <div class="flex flex-col">
-        <Command cmd="ls ~/projects" />
+        <Command cmd="cd ~/projects" />
         <h2 class="mb-10 text-xl font-bold">Projects</h2>
         <ul class="grid grid-cols-1 gap-3 md:grid-cols-2">
             {projects.map((p) => <ProjectCard p={p} client:load />)}

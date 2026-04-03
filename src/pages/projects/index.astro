@@ -1,0 +1,22 @@
+---
+import "@/styles/global.css";
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { ProjectCard } from "@/components/project-card";
+
+const projects = (await getCollection("projects")).sort((a, b) =>
+    a.data.title.localeCompare(b.data.title),
+);
+---
+
+<Layout
+    title="Muhammad Nabil - Projects"
+    description="Software projects I have worked on over the years"
+>
+    <div class="flex flex-col px-5 py-10">
+        <h2 class="mb-10 text-xl font-bold">Projects</h2>
+        <ul class="grid grid-cols-1 gap-3 md:grid-cols-2">
+            {projects.map((p) => <ProjectCard p={p.data} client:load />)}
+        </ul>
+    </div>
+</Layout>

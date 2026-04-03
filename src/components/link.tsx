@@ -1,6 +1,6 @@
-export function Link({ label, href = "#" }: { label: string, href?: string }) {
+export function Link({ label, href = "#", newTab = true }: { label: string, href?: string, newTab?: boolean }) {
     return <a href={href}
-        target="_blank"
-        className="text-muted-foreground hover:text-foreground text-sm hover:underline">[{label}]</a>
+        target={newTab ? "_blank" : "_self"}
+        className="text-muted-foreground hover:text-foreground hover:underline">[{label}]</a>
 
 }

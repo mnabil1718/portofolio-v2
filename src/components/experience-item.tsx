@@ -17,7 +17,7 @@ export function ExperienceItem({ exp }: { exp: Experience }) {
             </div>
 
             <div className="hidden md:flex md:flex-col md:items-center">
-                <div className="bg-foreground mt-1 h-1.5 w-1.5 flex-none rounded-full" />
+                <div className="bg-foreground mt-1 h-1 w-1 flex-none rounded-full" />
                 <div className="bg-border w-px flex-1" />
             </div>
 
