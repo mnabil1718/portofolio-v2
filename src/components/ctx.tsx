@@ -1,22 +1,59 @@
+import {
+    Item,
+    ItemActions,
+    ItemContent,
+    ItemDescription,
+    ItemMedia,
+    ItemTitle,
+} from "@/components/ui/item"
+import { Mail, Github, Linkedin, ExternalLink } from "lucide-react";
+
+
 const contacts = [
-    { label: "email", value: "mnabil1718@gmail.com" },
-    { label: "github", value: "https://github.com/mnabil1718" },
-    { label: "linkedin", value: "https://www.linkedin.com/in/muhammad-n-3ba978109" },
+    {
+        label: "Email",
+        icon: Mail,
+        value: "mnabil1718@gmail.com",
+        href: "mailto:mnabil1718@gmail.com",
+    },
+    {
+        label: "Github",
+        icon: Github,
+        value: "https://github.com/mnabil1718",
+        href: "https://github.com/mnabil1718",
+    },
+    {
+        label: "Linkedin",
+        icon: Linkedin,
+        value: "https://www.linkedin.com/in/muhammad-nabil-dev",
+        href: "https://www.linkedin.com/in/muhammad-nabil-dev",
+    },
 ];
-
-const pad = (str: string, len: number) => str.padEnd(len, " ");
-const col1 = 12;
-
-const header = `${pad("CHANNEL", col1)}| VALUE`;
-const divider = `${"-".repeat(col1)}+-${"-".repeat(20)}`;
-const rows = contacts.map((c) => `${pad(c.label, col1)}| ${c.value}`).join("\n");
 
 export function Ctx() {
     return (
-        <pre className="font-mono text-sm mt-3 text-foreground whitespace-pre-wrap break-all">
-            <span className="text-muted-foreground">{header}</span>{"\n"}
-            <span className="text-muted-foreground">{divider}</span>{"\n"}
-            {rows}
-        </pre>
+        <div className="grid gap-x-6 gap-y-1.5 font-mono"
+        >
+            {contacts.map(({ label, icon: Icon, value, href }) => (
+                <a href={href} target="_blank" rel="noopener" className="group">
+                    <Item variant="outline" size="sm" className="rounded-none">
+                        <ItemMedia variant="default">
+                            <Icon className="size-4" />
+                        </ItemMedia>
+                        <ItemContent>
+                            <ItemTitle className="text-sm">{label}</ItemTitle>
+                            <ItemDescription className="text-xs group-hover:underline">
+                                {value}
+                            </ItemDescription>
+                        </ItemContent>
+                        <ItemActions>
+                            <ExternalLink size={16} />
+                        </ItemActions>
+                    </Item>
+                </a>
+            ))}
+        </div>
     );
 }
+
+

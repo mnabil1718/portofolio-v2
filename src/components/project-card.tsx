@@ -17,7 +17,7 @@ export function ProjectCard({ p }: { p: Project }) {
             onClick={() => window.location.href = `/projects/${p.slug}`}
             className="cursor-pointer"
         >
-            <Item variant={"outline"} className="gap-1 p-3 group md:opacity-70 hover:opacity-100">
+            <Item variant={"outline"} className="gap-1 p-3 group md:opacity-70 hover:opacity-100 rounded-none">
                 <div className="aspect-video overflow-hidden mb-5 bg-muted flex justify-center relative">
                     <img src={p.image.src} alt={p.metatitle} className="h-full w-auto object-contain" />
                 </div>
