@@ -29,6 +29,7 @@ My goal is to simplify and streamlined ordering and checkout process of e-commer
 ### Auth & Social Login
 
 This project uses supabase authentication features, which includes Google Sign-in to login with customer's Google credentials. Other than user experience benefits, this also offloads user data storage responsibility to Google service. But if customers don't have Google account, they can always opt-out and use regular login via email and password.
+
 ![Matté authentication page](../images/matte/auth.png)
 
 ### Product Live Search & Filters
