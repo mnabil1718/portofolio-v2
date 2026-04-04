@@ -42,7 +42,7 @@ export function Ctx() {
                         </ItemMedia>
                         <ItemContent>
                             <ItemTitle className="text-sm">{label}</ItemTitle>
-                            <ItemDescription className="text-xs group-hover:underline">
+                            <ItemDescription className="line-clamp-1 text-xs group-hover:underline">
                                 {value}
                             </ItemDescription>
                         </ItemContent>
