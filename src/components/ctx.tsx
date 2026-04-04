@@ -25,8 +25,8 @@ const contacts = [
     {
         label: "Linkedin",
         icon: Linkedin,
-        value: "https://www.linkedin.com/in/muhammad-nabil-dev",
-        href: "https://www.linkedin.com/in/muhammad-nabil-dev",
+        value: "https://linkedin.com/in/muhammad-nabil-dev",
+        href: "https://linkedin.com/in/muhammad-nabil-dev",
     },
 ];
 
