@@ -14,7 +14,6 @@ export function Navbar() {
     const [mobileOpen, setMobileOpen] = useState(false);
 
     useEffect(() => {
-        console.log("PATH", window.location.pathname)
         setCurrentPath(window.location.pathname);
     }, []);
 
