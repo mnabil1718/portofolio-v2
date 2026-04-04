@@ -5,7 +5,7 @@ metatitle: "Matté - Coffee & Matcha in Harmony"
 desc: "Matcha & Coffee e-commerce platform with real-time stock and order updates."
 live_url: "https://matte-commerce.vercel.app"
 github_url: "https://github.com/mnabil1718/commerce"
-image: "../../../public/images/matte.png"
+image: "../images/matte/thumbnail.png"
 created_at: 2026-01-12T07:00:00Z
 ---
 
@@ -25,3 +25,44 @@ My goal is to simplify and streamlined ordering and checkout process of e-commer
 - Resend Email Service
 
 ## Features
+
+### Auth & Social Login
+
+This project uses supabase authentication features, which includes Google Sign-in to login with customer's Google credentials. Other than user experience benefits, this also offloads user data storage responsibility to Google service. But if customers don't have Google account, they can always opt-out and use regular login via email and password.
+![Matté authentication page](../images/matte/auth.png)
+
+### Product Live Search & Filters
+
+Customer can use live search feature from the navigation bar to quickly search product name and view the product detail. If they want more control over the filters, like filtering different categories and price ranges, as well as sorting the results based on date and prices, they can go to the catalogue page and adjust the filters there.
+
+![Live search modal](../images/matte/search.png)
+![Matté product catalogue page](../images/matte/catalogue.png)
+
+### Payment Gateway Integration
+
+For seamless payment experience, we integrated <a href="https://midtrans.com" target="_blank" rel="noopener">Midtrans</a> payment gateway. This method lets customer choose their preferred payment method from an array of various methods provided by Midtrans.
+
+From a technical point of view, this is also a great way to offload payment data and payload to 3rd party services with tested security and reliability. What is also great about Midtrans is that it lets us integrate end-to-end payment flow via <a href="https://docs.midtrans.com/docs/snap" target="_blank" rel="noopener">Midtrans Snap UI</a> which we can embed in our page. To receive update about the payment status, we just need to provide a <a href="https://docs.github.com/en/webhooks/about-webhooks" target="_blank" rel="noopener">Webhook</a> in our backend endpoint.
+
+![Payment gateway snap UI](../images/matte/midtrans.png)
+
+### Customer Order Detail & Tracking
+
+After an order has been placed, customer can view the detail of their order and track the status changes in real time. They can also request order cancellation for certain reason, but this can only be done before the item is shipped/sent. An administrator can then confirm if the cancellation is eligible or reject if it is not. Under the hood, the status changes to order status and payment status is done using web socket, specifically using <a href="https://supabase.com/docs/guides/realtime" target="_blank" rel="noopener">Supabase Realtime Database</a> to listen to row changes in real time.
+
+![Customer Order Detail](../images/matte/customer-order.png)
+
+### Admin Features
+
+This project also provided administrator with a content management platform and inventory manager where they can manage products and their stocks, categories, and customer orders. Real time features is implemented in areas such as product stock updates and order status changes. Both are implemented via Supabase Realtime feature.
+
+![Admin product inventory management](../images/matte/admin-products.png)
+![Admin orders management](../images/matte/admin-orders.png)
+
+## Challenges
+
+I would say the most challenging part for me was dealing with Row Level Security (RLS) from Supabase, since this is the first time I'm working with Supabase. Every table needs to have atleast a CRUD RLS policy. The pain points comes from dealing with nested joins on query because each table might have different RLS policies, thus for more fine-grained control you would want to use a more elevated privilege, like root/administrator access client. But to use this, you must restrict the usage only for queries that need elevated privileges, like querying data for admins.
+
+## Lessons
+
+This project is a great learning milestone for me because I learned a lot about react and next.js in general. From data fetching best practices, abstracting away service functions, using global axios instance, async functions with <a target="_blank" rel="noopener" href="https://github.com/pmndrs/zustand">zustand</a>, even realtime features using supabase. Considering this is also my first time using supabase, which uses PostgreSQL under the hood, I realized I really know so much about this amazing open source database and it really is one of the most feature-rich database to date.
