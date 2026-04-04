@@ -5,22 +5,17 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 
 const navs = [
-    { id: 0, label: "home", url: "/" },
-    { id: 1, label: "projects", url: "/projects" },
+    { id: 0, label: "home", url: "/", pattern: "^/$" },
+    { id: 1, label: "projects", url: "/projects", pattern: "^/projects(/|$)" },
 ];
 
-function getActiveLabel() {
-    if (typeof window === "undefined") return "home";
-    const path = window.location.pathname;
-    const match = navs.find((n) =>
-        n.url === "/" ? path === "/" : path.startsWith(n.url)
-    );
-    return match?.label ?? "home";
-}
-
 export function Navbar() {
-    const [activeId, setActiveId] = useState(getActiveLabel);
+    const [currentPath, setCurrentPath] = useState("/");
     const [mobileOpen, setMobileOpen] = useState(false);
+
+    useEffect(() => {
+        setCurrentPath(window.location.pathname);
+    }, []);
 
     useEffect(() => {
         const handleResize = () => {
@@ -30,8 +25,7 @@ export function Navbar() {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    function handleNavClick(label: string) {
-        setActiveId(label);
+    function handleNavClick() {
         setMobileOpen(false);
     }
 
@@ -47,8 +41,8 @@ export function Navbar() {
                                 id={n.id}
                                 label={n.label}
                                 url={n.url}
-                                active={activeId === n.label}
-                                onClick={() => handleNavClick(n.label)}
+                                active={new RegExp(n.pattern).test(currentPath)}
+                                onClick={() => handleNavClick()}
                             />
                         ))}
                     </div>
@@ -76,8 +70,8 @@ export function Navbar() {
                                 id={n.id}
                                 label={n.label}
                                 url={n.url}
-                                active={activeId === n.label}
-                                onClick={() => handleNavClick(n.label)}
+                                active={new RegExp(n.pattern).test(currentPath)}
+                                onClick={() => handleNavClick()}
                             />
                         ))}
                     </div>

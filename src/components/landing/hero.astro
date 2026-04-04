@@ -38,7 +38,7 @@ const links = [
             they work. Worked with various web technologies and recently piqued
             interest in more low-level stuff. I also use Neovim btw.
         </p>
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 text-xs font-semibold">
             {
                 links.map((l) => (
                     <Link label={l.label} href={l.href} client:load />

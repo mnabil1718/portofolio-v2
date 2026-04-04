@@ -48,7 +48,9 @@ From a technical point of view, this is also a great way to offload payment data
 
 ### Customer Order Detail & Tracking
 
-After an order has been placed, customer can view the detail of their order and track the status changes in real time. They can also request order cancellation for certain reason, but this can only be done before the item is shipped/sent. An administrator can then confirm if the cancellation is eligible or reject if it is not. Under the hood, the status changes to order status and payment status is done using web socket, specifically using <a href="https://supabase.com/docs/guides/realtime" target="_blank" rel="noopener">Supabase Realtime Database</a> to listen to row changes in real time.
+After an order has been placed, customer can view the detail of their order and track the status changes in real time. They can also request order cancellation for certain reason, but this can only be done before the item is shipped/sent. An administrator can then confirm if the cancellation is eligible or reject if it is not.
+
+Under the hood, the status changes to order status and payment status is done using web socket, specifically using <a href="https://supabase.com/docs/guides/realtime" target="_blank" rel="noopener">Supabase Realtime Database</a> to listen to row changes in real time.
 
 ![Customer Order Detail](../images/matte/customer-order.png)
 
@@ -61,8 +63,12 @@ This project also provided administrator with a content management platform and 
 
 ## Challenges
 
-I would say the most challenging part for me was dealing with Row Level Security (RLS) from Supabase, since this is the first time I'm working with Supabase. Every table needs to have atleast a CRUD RLS policy. The pain points comes from dealing with nested joins on query because each table might have different RLS policies, thus for more fine-grained control you would want to use a more elevated privilege, like root/administrator access client. But to use this, you must restrict the usage only for queries that need elevated privileges, like querying data for admins.
+I would say the most challenging part for me was dealing with Row Level Security (RLS) from Supabase, since this is the first time I'm working with Supabase. Every table needs to have atleast a CRUD RLS policy.
+
+The pain points comes from dealing with nested joins on query because each table might have different RLS policies, thus for more fine-grained control you would want to use a more elevated privilege, like root/administrator access client. But to use this, you must restrict the usage only for queries that need elevated privileges, like querying data for admins.
 
 ## Lessons
 
-This project is a great learning milestone for me because I learned a lot about react and next.js in general. From data fetching best practices, abstracting away service functions, using global axios instance, async functions with <a target="_blank" rel="noopener" href="https://github.com/pmndrs/zustand">zustand</a>, even realtime features using supabase. Considering this is also my first time using supabase, which uses PostgreSQL under the hood, I realized I really know so much about this amazing open source database and it really is one of the most feature-rich database to date.
+This project is a great learning milestone for me because I learned a lot about react and next.js in general. From data fetching best practices, abstracting away service functions, using global axios instance, async functions with <a target="_blank" rel="noopener" href="https://github.com/pmndrs/zustand">zustand</a>, even realtime features using supabase.
+
+Considering this is also my first time using supabase, which uses PostgreSQL under the hood, I realized I really know so much about this amazing open source database and it really is one of the most feature-rich database to date.
