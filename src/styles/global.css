@@ -40,7 +40,6 @@
   --sidebar-ring: oklch(0.5547 0.2503 297.0156);
   --font-sans: Montserrat, sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: Fira Code, monospace;
   --radius: 0.35rem;
   --shadow-x: 0px;
   --shadow-y: 4px;
@@ -105,7 +104,6 @@
   --sidebar-ring: oklch(0.7871 0.1187 304.7693);
   --font-sans: Montserrat, sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: Fira Code, monospace;
   --radius: 0.35rem;
   --shadow-x: 0px;
   --shadow-y: 4px;
