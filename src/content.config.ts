@@ -1,6 +1,7 @@
 import { defineCollection } from "astro:content";
-import { glob } from "astro/loaders";
+import { file, glob } from "astro/loaders";
 import { ProjectSchemaFactory } from "./schemas/project";
+import { ExperienceSchemaFactory } from "./schemas/experience";
 
 
 const projects = defineCollection({
@@ -11,4 +12,10 @@ const projects = defineCollection({
     schema: ({ image }) => ProjectSchemaFactory(image)
 })
 
-export const collections = { projects }
+
+const experiences = defineCollection({
+    loader: file("src/data/experiences.json"),
+    schema: ({ image }) => ExperienceSchemaFactory(image)
+})
+
+export const collections = { projects, experiences }

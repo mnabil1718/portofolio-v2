@@ -1,0 +1,62 @@
+---
+import { Image } from "astro:assets";
+import type { Experience } from "../schemas/experience";
+
+interface Props {
+    exp: Experience;
+}
+
+const { exp } = Astro.props;
+---
+
+<li class="flex flex-col gap-1 md:flex-row md:gap-4">
+    <div
+        class="text-muted-foreground text-right text-xs md:w-32 md:flex-none md:pt-1"
+    >
+        <span
+            >{
+                exp.from.toLocaleDateString("en-US", {
+                    month: "short",
+                    year: "numeric",
+                })
+            }</span
+        >
+        <span class="md:hidden">-</span>
+        <br class="hidden md:block" />
+        <span
+            >{
+                exp.to
+                    ? exp.to.toLocaleDateString("en-US", {
+                          month: "short",
+                          year: "numeric",
+                      })
+                    : "Present"
+            }</span
+        >
+    </div>
+    <div class="hidden md:flex md:flex-col md:items-center">
+        <!-- <div class="bg-foreground mt-1 h-1 w-1 flex-none rounded-full"></div> -->
+        <div class="bg-border w-px flex-1"></div>
+    </div>
+    <div class="pb-10 md:pl-4">
+        <div class="flex items-start gap-4">
+            <div
+                class="relative h-10 w-10 flex-none overflow-hidden rounded-md"
+            >
+                <Image
+                    src={exp.image}
+                    alt={exp.company}
+                    width={40}
+                    height={40}
+                />
+            </div>
+            <div class="experiences">
+                <h2 class="font-semibold">{exp.company}</h2>
+                <p class="text-muted-foreground mb-3 text-xs">{exp.role}</p>
+                <ul class="text-muted-foreground flex flex-col gap-2 text-sm">
+                    {exp.jobdesks.map((task: string) => <li>{task}</li>)}
+                </ul>
+            </div>
+        </div>
+    </div>
+</li>

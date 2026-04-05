@@ -1,41 +1,11 @@
 ---
 import { Command } from "../command";
-import { ExperienceItem } from "../experience-item";
-import Zafira from "../../assets/zafiraglow.png";
-import Tingkatin from "../../assets/tingkatin.png";
+import ExperienceItem from "../experience-item.astro";
+import { getCollection } from "astro:content";
 
-const experiences = [
-    {
-        id: 1,
-        company: "Zafira Glow",
-        role: "Digital Marketer",
-        img: Zafira.src,
-        imgAlt: "Zafira Glow",
-        from: "Jan 2025",
-        to: "Aug 2025",
-        jobdesks: [
-            "Develop e-commerce site using WordPress",
-            "Improve site performance & SEO best practices",
-            "Develop digital marketing & content marketing strategies",
-            "Implement marketing strategies using Meta Ads & Google Ads",
-        ],
-    },
-    {
-        id: 2,
-        company: "Tingkatin.co",
-        role: "Freelance Web Developer",
-        img: Tingkatin.src,
-        imgAlt: "Tingkatin.co",
-        from: "Jul 2023",
-        to: "Dec 2024",
-        jobdesks: [
-            "Develop portfolio & blog websites using wordpress and next.js for clients",
-            "Copywriting internal wordpress blog",
-            "Creating documentation and client's requirement for incoming project",
-            "Bug fixes & troubleshoot on deployed client's websites",
-        ],
-    },
-];
+const experiences = (await getCollection("experiences")).sort(
+    (a, b) => b.data.from.getTime() - a.data.from.getTime(),
+);
 ---
 
 <section id="experience" class="flex flex-col border-t px-5 py-10">
@@ -43,7 +13,7 @@ const experiences = [
         <Command cmd="cat ./experiences.log" />
         <h2 class="mb-10 text-xl font-bold">Experiences</h2>
         <ul class="flex flex-col gap-0">
-            {experiences.map((exp) => <ExperienceItem exp={exp} client:load />)}
+            {experiences.map((exp) => <ExperienceItem exp={exp.data} />)}
         </ul>
     </div>
 </section>

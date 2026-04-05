@@ -35,7 +35,7 @@ export function Ctx() {
         <div className="grid gap-x-6 gap-y-1.5 font-mono"
         >
             {contacts.map(({ label, icon: Icon, value, href }) => (
-                <a href={href} target="_blank" rel="noopener" className="group">
+                <a key={label} href={href} target="_blank" rel="noopener" className="group">
                     <Item variant="outline" size="sm" className="rounded-none">
                         <ItemMedia variant="default">
                             <Icon className="size-4" />

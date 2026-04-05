@@ -228,3 +228,18 @@
   position: absolute;
   left: -1.5rem;
 }
+
+.experiences ul {
+  list-style: none;
+  padding-left: 1.5rem;
+}
+
+.experiences ul > li {
+  position: relative;
+}
+
+.experiences ul > li::before {
+  content: "- ";
+  position: absolute;
+  left: -1.5rem;
+}

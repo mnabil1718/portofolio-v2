@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "company": "Zafira Glow",
+    "role": "Digital Marketer",
+    "image": "../assets/zafiraglow.png",
+    "from": "2025-01-01",
+    "to": "2025-08-01",
+    "jobdesks": [
+      "Develop e-commerce site using WordPress",
+      "Improve site performance & SEO best practices",
+      "Develop digital marketing & content marketing strategies",
+      "Implement marketing strategies using Meta Ads & Google Ads"
+    ]
+  },
+  {
+    "id": 2,
+    "company": "Tingkatin Technology",
+    "role": "Freelance Web Developer",
+    "image": "../assets/tingkatin.png",
+    "from": "2021-06-01",
+    "to": "2023-06-01",
+    "jobdesks": [
+      "Develop portfolio & blog websites using wordpress and next.js for clients",
+      "Copywriting internal wordpress blog",
+      "Creating documentation and client's requirement for incoming project",
+      "Bug fixes & troubleshoot on deployed client's websites"
+    ]
+  }
+]
