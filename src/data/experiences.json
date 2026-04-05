@@ -1,20 +1,6 @@
 [
   {
     "id": 1,
-    "company": "Zafira Glow",
-    "role": "Digital Marketer",
-    "image": "../assets/zafiraglow.png",
-    "from": "2025-01-01",
-    "to": "2025-08-01",
-    "jobdesks": [
-      "Develop e-commerce site using WordPress",
-      "Improve site performance & SEO best practices",
-      "Develop digital marketing & content marketing strategies",
-      "Implement marketing strategies using Meta Ads & Google Ads"
-    ]
-  },
-  {
-    "id": 2,
     "company": "Tingkatin Technology",
     "role": "Freelance Web Developer",
     "image": "../assets/tingkatin.png",
@@ -25,6 +11,20 @@
       "Copywriting internal wordpress blog",
       "Creating documentation and client's requirement for incoming project",
       "Bug fixes & troubleshoot on deployed client's websites"
+    ]
+  },
+  {
+    "id": 2,
+    "company": "DumbWays.id",
+    "role": "Full Stack Developer Intern",
+    "image": "../assets/dumbways.svg",
+    "from": "2026-02-01",
+    "to": "2026-03-01",
+    "jobdesks": [
+      "Built full stack web applications using Next.js, Go, Express.js, and PostgreSQL",
+      "Developed features such as real-time updates (WebSocket), payment gateway integration, and data caching",
+      "Integrated LLM-powered features using Gemini API",
+      "Setup CI/CD deployments using Docker and GitHub Actions"
     ]
   }
 ]
