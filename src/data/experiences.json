@@ -7,10 +7,10 @@
     "from": "2021-06-01",
     "to": "2023-06-01",
     "jobdesks": [
-      "Develop portfolio & blog websites using wordpress and next.js for clients",
-      "Copywriting internal wordpress blog",
-      "Creating documentation and client's requirement for incoming project",
-      "Bug fixes & troubleshoot on deployed client's websites"
+      "Built and maintained full-stack web applications using Laravel and MySQL",
+      "Developed systems including financial management software and academic research platforms used by 200+ active users",
+      "Implemented fuzzy search and payment gateway integrations (Midtrans)",
+      "Deployed services on Linux VPS with Docker and NGINX"
     ]
   },
   {
