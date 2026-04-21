@@ -3,6 +3,7 @@ import { defineConfig, fontProviders } from "astro/config";
 
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
+import rehypeImageZoom from "./src/plugins/image-zoom/rehype.ts";
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,6 +13,9 @@ export default defineConfig({
   },
   image: {
     layout: "constrained",
+  },
+  markdown: {
+    rehypePlugins: [rehypeImageZoom],
   },
   experimental: {
     fonts: [
