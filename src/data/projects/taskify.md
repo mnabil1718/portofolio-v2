@@ -4,8 +4,8 @@ slug: "taskify"
 metatitle: "Taskify - Manage your tasks with ease"
 desc: "Kanban board application to organize, filter, label, and set deadlines to your tasks/projects"
 live_url: "https://ui-circle.up.railway.app"
-github_url: "https://github.com/mnabil1718/circle-social-platform"
-image: "../images/circle/thumbnail.png"
+github_url: "https://github.com/Riza-FP/taskify"
+image: "../images/taskify/thumbnail.png"
 created_at: 2026-02-07T07:00:00Z
 ---
 
@@ -17,7 +17,7 @@ Taskify is a kanban board web application to organize and sort tasks. As the nam
 
 This project is delivered as a free simple solutions for people who want to start using kanban board to manage and organize their tasks. Taskify features drag and drop tasks, advanced filtering and sorting, and real time deadline notification.
 
-Alongside above reasons, this project also serves as a learning step for me and my teammate to learn drag and drop functionality, real time notification changes, and efficiently stores data without explicit trigger or button click.
+Alongside above reasons, this project also serves as a learning step for me and my teammate [@Riza-FP](https://github.com/Riza-FP) to learn drag and drop functionality, real time notification changes, and efficiently stores data without explicit trigger or button click.
 
 ## Tech Stack
 
@@ -27,48 +27,68 @@ Alongside above reasons, this project also serves as a learning step for me and 
 
 ## Features
 
-### Authentication
+### Boards
 
-Users may log in to their account by providing username/email and password. If they have not register, they may do so in the registration page. Under the hood, authentication mechanism used in this project is Json Web Token (JWT), which is lightweight and stateless, suitable for large scalable applications.
+Users can manage their boards, conventionally a kanban board is used for one project. Within boards menu, users can add new board, go into their existing ones, or delete one.
 
-![Circle app login page](../images/circle/login.png)
+![Boards menu](../images/taskify/boards.png)
 
-### Write Post & Replies
+### Drag & Drop
 
-User can write a new post, usually contain what they want to say about things, or latest update on something they want to share. They cna also write a reply to somebody elses post. Along with that, they can also upload an image along with their posts and replies.
+Inside a board, users will be presented with default pre-made lists: to do, in progress, and done. But other than that, users my freely add or delete lists. List contain zero or more tasks and represent a state/stage in the project.
 
-![Write new post](../images/circle/new-post.png)
+Users can move task to another list via a drag & drop gesture. This is usually done when a task has move to a different stage of the project, or vice cersa.
 
-### Profiles
+![Board screen](../images/taskify/board.png)
 
-User can edit their profile: add photo profile, change username, email, and write their short biography. This will also be reflected when other users visit their profile.
+### Tasks
 
-![Edit profile](../images/circle/edit-profile.png)
+The smallest building block of a kanban board, a task may contain title, description, labels, and deadline. Users may only create, edit, and delete tasks inside a list.
 
-![View profile](../images/circle/profile.png)
+![Edit task](../images/taskify/edit.png)
 
-### Search
+### Filters & Sorts
 
-Users can also search other people using their name or username.
+One of the most frequently used feature of taskify is filters and sorts, which works to organize tasks both on board level and list level.
 
-![Search profile](../images/circle/search.png)
+- On board level, users can filter tasks by title and labels. Users can also sort tasks alphabetically and by deadlines.
+- On list level, users can sort tasks alphabetically, by date they are created at, or deadline.
 
-### Likes & Follows
+![Board level filters](../images/taskify/label.png)
+![List level filters](../images/taskify/list-sort.png)
 
-User can also like a post or reply they like. Other than that, they can also follow/unfollow other people. To me these features are the most interesting part, because I get to learn how to update a state of my website in real time using web socket. This also give users an instant experience as they like or follow, which is crucial in a social media platform.
+### Real Time Upcoming Deadline Notification
 
-![Circle app follow system](../images/circle/follow.png)
+Also one of the most useful feature is deadline notification, which will send a notification of any upcoming deadline in the near future. It will appear as toasts in the app, as well as a list in notification inbox.
+
+Users my also set when the notification should be sent e.g. in 24 hours before the deadline, 3 days before the deadline, and so on.
+
+![Deadline notifications](../images/taskify/notif.png)
+![Deadline notification settings](../images/taskify/settings.png)
 
 ## Challenges
 
-Although this is my first time implementing web socket, the real challenges for me comes from state management. This is the first time I need to implement optimistic update, where we _assume_ async operation always succeed. Until they don't. So I also need to "rollback" state in case operations failed.
+From the frontend perspective, the main challenge was working with drag & drop interactivity. We did use [React DnD Toolkit](https://react-dnd.github.io/react-dnd/about), which takes care of drag & drop animation and event listening under the hood. On each event listener we then need to calculate the position of moved tasks and sync with backend.
 
-On the other hand, I keep separate lists of posts as application state. Since we use real time updates for like counts, new post added, profile updates, I need to sync up those changes to multiple of these lists, making it a complex problem yet so much fun to solve.
+From the backend perspective, we look for a way to efficiently calculate new positions when users move tasks between lists, or evne just re-ordering the tasks. Using ordinary integer number for unique position is not plausible, because for any re-order you would have to update the position other tasks in the list as well.
 
-What I did was to utilize helper functions specifically to update particular post in-place in the state, abstracting away state changes management.
+We initially looked into [fractional indexing](https://vlcn.io/blog/fractional-indexing), in which a new inserted task will be assigned a new position of `prevPosition + nextPosition / 2`. This also mean that the position column needs to accomodate decimal number (float).
+
+Fractional indexing allows us to only update the position of the task that is being moved, without updating other tasks in a list but is quickly exhaustive. Imagine 2 tasks, task A (position: 1) and task B (position: 2).
+
+- Insert task C between task A and B, update position C: 1.5
+- Re-order A between B and C, update position A: 1.75
+- Re-order B between A and C, update position B: 1.825
+- Re-order C between A and B, update position C: 1.8875
+
+As you can see, the updated position quickly becomes smaller for every re-order and will overflow float data type.
+
+So in the end, we settled with [Lexorank Algorithm](https://medium.com/whisperarts/lexorank-what-are-they-and-how-to-use-them-for-efficient-list-sorting-a48fc4e7849f) which was developed by [Jira](https://www.atlassian.com/software/jira) to handle their rank system that scale. In a nutshell, they use lexixal string system to calculate new position and this is great because it does not becomes exhaustive fast, so we only need to re-balance the ranks for longer period.
 
 ## Lessons
 
-This project is really a stepping stone for me to learn real time update and complex state management. Eventhough this is my first time implementing web socket, it went rather seamless.
+This project provides interesting challenges that we as a team needs to overcome, from web canvas drag and drop to ranking system that scales. It definitely teaches us that system performance and efficiency needs to increase linearly with data scale.
 
-I think most of the development time actually comes from managing error handling and syncing server response across states, which is leaning toward a search algorithm problem. But overall, this is a fun project with fun problems to solve.
+## Acknowledgments
+
+- Riza Fauzan Pratama [@Riza-FP](https://github.com/Riza-FP)
