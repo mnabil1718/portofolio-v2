@@ -3,6 +3,7 @@ import { NavLink } from "./nav-link";
 import { ThemeToggle } from "./theme-toggle";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import CliToggle from "./cli-toggle";
 
 const navs = [
     { id: 0, label: "home", url: "/", pattern: "^/$" },
@@ -48,6 +49,7 @@ export function Navbar() {
                     </div>
                     <div className="flex gap-2 items-center">
                         <ThemeToggle />
+                        <CliToggle />
                         <Button
                             variant="ghost"
                             size="sm"
