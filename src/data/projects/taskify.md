@@ -3,7 +3,7 @@ title: "Taskify"
 slug: "taskify"
 metatitle: "Taskify - Manage your tasks with ease"
 desc: "Kanban board application to organize, filter, label, and set deadlines to your tasks/projects"
-live_url: "https://ui-circle.up.railway.app"
+live_url: "https://taskify-frontend-lilac.vercel.app"
 github_url: "https://github.com/Riza-FP/taskify"
 image: "../images/taskify/thumbnail.png"
 created_at: 2026-02-07T07:00:00Z
